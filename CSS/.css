@@ -1,16 +1,5 @@
-
 div {
-    font-family: 'Righteous', cursive;
-}
-
-.card{
-background-color: black;
-}
-
-.card_front{
-background-color: #101c2c;
-}
-
-.card_back{
-background-color: aquamarine;
+    background-color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    color: red;
 }
