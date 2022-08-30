@@ -4,7 +4,7 @@ div {
 }
 
 .card{
-
+background-color: black;
 }
 
 .card_front{
@@ -12,5 +12,5 @@ background-color: #101c2c;
 }
 
 .card_back{
-
+background-color: aquamarine;
 }
