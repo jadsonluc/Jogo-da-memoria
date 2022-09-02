@@ -3,25 +3,20 @@ const BACK = "card_back"
 const CARD = 'card'
 const ICON = 'icon'
 
-let techs = ['bootstrap', 'css', 'electron', 'firebase', 'html', 'javascript', 'jquery', 'mongo', 'node', 'react']
 
-let cards = null
+
 
 startGame();
-console.log(currentIndex)
+
 
 function startGame() {
-    cards = createCardsFromTechs(techs)
-    shuffleCards(cards)
-    
-    initializeCards(cards)
-    
+    initializeCards(game.createCardsFromTechs())
 }
 
 function initializeCards(cards) {
     let gameBoard = document.getElementById("gameBoard")
     
-    cards.forEach(card => {
+    game.cards.forEach(card => {
 
         let cardElement = document.createElement('div')
         cardElement.id = card.id
@@ -58,50 +53,22 @@ function createCardFace(face, card, element){
     element.appendChild(cardElementFace)
 }
 
-
-function shuffleCards(cards) {
-    let currentIndex = cards.length;
-    let randomIndex = 0
-
-    while (currentIndex !== 0) {
-
-        randomIndex = Math.floor(Math.random() * currentIndex)
-        currentIndex-- 
-
-        [cards[currentIndex], cards[randomIndex]] = [cards[randomIndex], cards[currentIndex]]
-
-      
-    }
-}
-
-
-function createCardsFromTechs(techs){
-    
-    let cards = []
-
-    for(let tech of techs) {
-        cards.push(createPairFromTech(tech))
-    }
-    return (cards.flatMap(pair=>pair))
-}
-
-function createPairFromTech(tech) {
-
-    return[{
-        id: createIdWithTech(tech),
-        icon: tech,
-        flipped: false,
-    }, {
-        id: createIdWithTech(tech),
-        icon: tech,
-        flipped: false,
-    }]
-}
-
-function createIdWithTech(tech){
-    return tech + parseInt(Math.random() * 1000)
-}
-
 function flipCard() {
+
+    if (game.setCard(this.id)){
+
     this.classList.add("flip")
+    if(game.checkMatch()){
+        game.clearCards()
+    }else{
+        setTimeout(()=>{
+        let firstCardView = document.getElementById(game.firstCard.id)
+        let secondCardView = document.getElementById(game.secondCard.id)
+
+        firstCardView.classList.remove("flip")
+        secondCardView.classList.remove("flip")
+        game.clearCards()
+    }, 1000)
+}
+}
 }
